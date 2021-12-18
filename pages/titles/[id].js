@@ -1,5 +1,7 @@
 import Col from '../../components/col'
+import Heading from '../../components/heading'
 import Layout from '../../components/layout'
+import Paragraph from '../../components/paragraph'
 import Row from '../../components/row'
 import StoryArt from '../../components/storyart'
 
@@ -33,16 +35,22 @@ export async function getStaticProps({ params }) {
 	}
 }
 
-const singleMovie = ( { movieData }) => {
-    const { title, featuredImage, titleInformation, genres} = movieData
+const singleMovie = ( { movieData } ) => {
+    const { title, featuredImage, titleInformation, genres, ratings } = movieData
 	const { duration, year, youtubeUrl, storyArt, storyLogo } = titleInformation
+	const ratingsString = ratings.edges.map((rating) => {
+		return rating.node.name
+	})
+
+
     return <Layout>
 		{storyArt &&
 			<StoryArt storyArt={storyArt} youtubeUrl={youtubeUrl} />
 		}
 		<Row>
 			<Col xs="12" sm="12" md="6" >
-				Title and meta information
+				<Heading type="h1">{title}</Heading>
+				<Paragraph>{year} &#8226; {ratingsString} &#8226; Duration</Paragraph>
 			</Col>
 			<Col xs="12" sm="12" md="6">
 				Genres
